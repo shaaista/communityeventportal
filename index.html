@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Community Event Portal</title>
+  <style>
+  #welcomeBanner {
+    background-color: #007BFF;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    border-radius: 10px;
+  }
+  .highlight {
+    background-color: yellow;
+    font-style: italic;
+  }
+  .gallery-img {
+    border: 3px solid #444;
+    border-radius: 8px;
+    width: 150px;
+    height: 150px;
+  }
+  figcaption {
+    text-align: center;
+    font-size: 14px;
+    padding-top: 5px;
+  }
+  table {
+    width: 100%;
+    text-align: center;
+    margin-top: 20px;
+  }
+  form {
+    background-color: #f2f2f2;
+    padding: 20px;
+    width: 350px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 8px gray;
+  }
+  input, select, textarea {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  button {
+    padding: 10px 15px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  button:hover {
+    background-color: #0056b3;
+  }
+  #confirmationMessage {
+    font-weight: bold;
+    color: green;
+  }
+  #feedback img {
+    border: 2px solid #999;
+    border-radius: 8px;
+    transition: 0.3s;
+  }
+  #feeInfo {
+    font-weight: bold;
+    color: #444;
+  }
+  #charCount {
+    font-size: 14px;
+    color: #555;
+  }
+  #videoInvite {
+    margin-top: 40px;
+  }
+  #videoStatus {
+    font-weight: bold;
+    color: green;
+    margin-top: 10px;
+  }
+  </style>
+</head>
+<body>
+<nav>
+  <a href="#home">Home</a> |
+  <a href="#events">Events</a> |
+  <a href="#contact">Contact</a> |
+  <a href="help.html" target="_blank">Help</a>
+</nav>
+
+<div id="welcomeBanner">
+  <h1>Welcome, Resident!</h1>
+  <p>🎉 Enjoy exclusive community events! <span style="color: red; font-weight: bold;">Special Offer Today!</span></p>
+</div>
+
+<main>
+  <section id="home">
+  <h2>Welcome to the Community Event Portal</h2>
+  <p>This is the homepage for all local events and services.</p>
+  
+  <!-- 📍 Geolocation Feature Button -->
+  <button onclick="findNearbyEvents()">Find Nearby Events</button>
+  <p id="geoOutput"></p>
+</section>
+
+
+  <section id="events">
+    <h2>Upcoming Events</h2>
+    <p>Stay updated with the latest events happening in your area.</p>
+  </section>
+
+  <section id="contact">
+    <h2>Contact Us</h2>
+    <p>Email: events@citycouncil.gov</p>
+  </section>
+
+  <section id="gallery">
+    <h2>Event Gallery</h2>
+    <table>
+      <tr>
+        <td>
+          <img src="https://activeforlife.com/img/large-webp-2x/2018/08/family-picnic.jpg" alt="Event 1" title="Community Picnic" class="gallery-img">
+          <figcaption>Community Picnic</figcaption>
+        </td>
+        <td>
+          <img src="https://earth5r.org/wp-content/uploads/2024/04/Earth5R-CSR-ESG-Plantation-Drive-Delhi-Earth5R-Mumbai-1536x864.jpg" alt="Event 2" title="Tree Plantation" class="gallery-img">
+          <figcaption>Tree Plantation Drive</figcaption>
+        </td>
+        <td>
+          <img src="https://www.visionvivaah.com/blog/wp-content/uploads/2019/12/Event-organizer-for-cultural-shows.jpg" alt="Event 3" title="Cultural Program" class="gallery-img">
+          <figcaption>Cultural Program</figcaption>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <img src="https://gwinnettmagazine.com/wp-content/uploads/2021/07/yoga2-1068x601.jpg" alt="Event 4" title="Yoga Session" class="gallery-img">
+          <figcaption>Yoga Session</figcaption>
+        </td>
+        <td>
+          <img src="https://images.hindustantimes.com/rf/image_size_640x362/HT/p2/2016/06/14/Pictures/blood-donation-camp-at-iehe_06c40a76-322c-11e6-a1a7-3aade94c5b51.jpg" alt="Event 5" title="Blood Donation" class="gallery-img">
+          <figcaption>Blood Donation Camp</figcaption>
+        </td>
+        <td>
+          <img src="https://www.pics4news.com/Event_Gallery/2025-01-26/76th_Republic_Day_Parade_at_Manekshaw_Parade_Grounds/Medium_Images/76th_Republic_Day_Parade_at_Manekshaw_Parade_Grounds_168344_medium.jpg" alt="Event 6" title="Local Parade" class="gallery-img">
+          <figcaption>Local Parade</figcaption>
+        </td>
+      </tr>
+    </table>
+  </section>
+
+  <section id="register">
+    <h2>Register for an Event</h2>
+    <form id="eventForm" onsubmit="showConfirmation(); return false;">
+      <label for="name">Name:</label><br>
+      <input type="text" id="name" name="name" placeholder="Enter your full name" required autofocus><br><br>
+
+      <label for="email">Email:</label><br>
+      <input type="email" id="email" name="email" placeholder="Enter your email" required><br><br>
+
+      <label for="date">Event Date:</label><br>
+      <input type="date" id="date" name="date" required><br><br>
+
+      <label for="eventSelect">Select Event:</label><br>
+      <select id="eventSelect" onchange="savePreference()">
+        <option value="">--Choose--</option>
+        <option value="picnic">Community Picnic</option>
+        <option value="plantation">Tree Plantation</option>
+        <option value="yoga">Yoga Session</option>
+      </select><br><br>
+
+      <label for="message">Message:</label><br>
+      <textarea id="message" name="message" placeholder="Write something..." rows="4" cols="30"></textarea><br><br>
+
+      <button type="submit">Submit</button>
+      <button onclick="clearPreferences()">Clear Preferences</button>
+    </form>
+
+    <br>
+    <output id="confirmationMessage"></output>
+  </section>
+
+  <section id="feedback">
+    <h2>Event Feedback</h2>
+    <label for="phone">Phone Number:</label><br>
+    <input type="text" id="phone" onblur="validatePhone()" placeholder="Enter 10-digit number"><br><br>
+
+    <label for="fee">Select Event:</label><br>
+    <select id="feeSelect" onchange="showFee()">
+      <option value="">--Choose--</option>
+      <option value="picnic">Community Picnic</option>
+      <option value="plantation">Tree Plantation</option>
+      <option value="yoga">Yoga Session</option>
+    </select><br>
+    <p id="feeInfo"></p><br>
+
+    <img src="https://www.pingpongmoments.in/blog/wp-content/uploads/2022/09/corporate-events-3.jpg" id="eventImage" ondblclick="enlargeImage()" style="cursor: pointer;"><br><br>
+
+    <label for="feedbackBox">Your Feedback:</label><br>
+    <textarea id="feedbackBox" onkeyup="countChars()" rows="4" cols="30"></textarea><br>
+    <span id="charCount">Characters: 0</span><br><br>
+
+    <button onclick="showThanks()">Submit Feedback</button>
+  </section>
+
+  <section id="videoInvite">
+    <h2>🎥 Event Promo Video</h2>
+    <video id="promoVideo" width="400" controls oncanplay="videoReady()">
+      <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    <p id="videoStatus"></p>
+  </section>
+</main>
+
+<footer>
+  <p>&copy; 2025 City Council</p>
+</footer>
+
+<script>
+function showConfirmation() {
+  const name = document.getElementById("name").value;
+  const event = document.getElementById("eventSelect").value;
+  const output = document.getElementById("confirmationMessage");
+  output.innerHTML = `🎉 Thank you, ${name}! You’ve successfully registered for the ${event} event.`;
+}
+function validatePhone() {
+  const phone = document.getElementById("phone").value;
+  if (!/^\d{10}$/.test(phone)) {
+    alert("Please enter a valid 10-digit phone number.");
+  }
+}
+function showFee() {
+  const event = document.getElementById("feeSelect").value;
+  const feeText = {
+    picnic: "Fee: ₹100",
+    plantation: "Fee: Free!",
+    yoga: "Fee: ₹50"
+  };
+  document.getElementById("feeInfo").innerText = feeText[event] || "";
+}
+function showThanks() {
+  alert("✅ Thank you for your feedback!");
+}
+function enlargeImage() {
+  const img = document.getElementById("eventImage");
+  img.style.width = "300px";
+  img.style.height = "300px";
+}
+function countChars() {
+  const length = document.getElementById("feedbackBox").value.length;
+  document.getElementById("charCount").innerText = `Characters: ${length}`;
+}
+function videoReady() {
+  document.getElementById("videoStatus").innerText = "✅ Video is ready to play!";
+}
+window.onbeforeunload = function () {
+  const form = document.getElementById("eventForm");
+  const name = form["name"].value;
+  const email = form["email"].value;
+  if (name !== "" || email !== "") {
+    return "You have unsaved changes. Are you sure you want to leave?";
+  }
+};
+function savePreference() {
+  const select = document.getElementById("eventSelect");
+  const selected = select.value;
+  localStorage.setItem("preferredEvent", selected);
+}
+window.onload = function() {
+  const savedEvent = localStorage.getItem("preferredEvent");
+  if (savedEvent) {
+    const select = document.getElementById("eventSelect");
+    select.value = savedEvent;
+  }
+};
+function clearPreferences() {
+  localStorage.clear();
+  sessionStorage.clear();
+  alert("Preferences cleared!");
+  document.getElementById("eventSelect").value = "";
+}
+function findNearbyEvents() {
+  const output = document.getElementById("geoOutput");
+
+  if (!navigator.geolocation) {
+    output.innerText = "Geolocation is not supported by your browser.";
+    return;
+  }
+
+  output.innerText = "📍 Locating... Please wait.";
+
+  navigator.geolocation.getCurrentPosition(
+    function (position) {
+      const latitude = position.coords.latitude;
+      const longitude = position.coords.longitude;
+      output.innerText = `✅ Your Coordinates:\nLatitude: ${latitude.toFixed(5)}, Longitude: ${longitude.toFixed(5)}`;
+    },
+    function (error) {
+      switch (error.code) {
+        case error.PERMISSION_DENIED:
+          output.innerText = "❌ Permission denied. Please allow location access.";
+          break;
+        case error.POSITION_UNAVAILABLE:
+          output.innerText = "❌ Location unavailable.";
+          break;
+        case error.TIMEOUT:
+          output.innerText = "❌ Request timed out. Try again.";
+          break;
+        default:
+          output.innerText = "❌ An unknown error occurred.";
+      }
+    },
+    {
+      enableHighAccuracy: true,
+      timeout: 10000,
+      maximumAge: 0
+    }
+  );
+}
+
+</script>
+</body>
+</html>
